@@ -1,8 +1,14 @@
 {
+  "name": "find-my-nearest",
+  "version": "1.0.0",
+  "description": "A JavaScript project that uses LeafletJS to find nearby places like hospitals, restaurants, and gas stations. It makes use of geolocation and gets the user's current location, if allowed.",
   "scripts": {
-    "dev": "npx tailwindcss -i css/style.css -o css/style-output.css -w "
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tailwindcss -i ./css/style.css -o ./src/style-output.css --watch"
   },
-  "devDependencies": {
+  "author": "Gabriel Austria",
+  "license": "ISC",
+  "dependencies": {
     "tailwindcss": "^3.4.17"
   }
 }

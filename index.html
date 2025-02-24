@@ -4,12 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find My Nearest</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="css/style-output.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-<body>
-
-    <h1>Find My Nearest</h1>
+<body class="m-8 bg-[#303030]">
+    <div class="flex justify-center items-center bg-[#fefefe] p-4">
+        <div class=" flex-none h-[calc(100vh-20vh)] flex flex-col items-start justify-start">
+            <h1 class="text-[#333] font-bold text-4xl">Find My Nearest</h1>
+            <select id="placeType">
+                <option value="hospital">Hospital</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="fuel">Gas Station</option>
+                <option value="pharmacy">Pharmacy</option>
+                <option value="bank">Bank</option>
+                <option value="cafe">Cafe</option>
+                <option value="hotel">Hotel</option>
+                <option value="atm">ATM</option>
+            </select>
+            <button onclick="findNearby()">Find Nearest</button>
+            <button onclick="clearResults()">Clear Results</button>
+            <p id="resultCount">Results: 0</p>
+        </div>
+        <div class="flex-1">
+            <div id="map" class="w-full"></div>
+        </div>
+    </div>
+    <!-- <h1 class="text-[#ffff]">Find My Nearest</h1>
     <select id="placeType">
         <option value="hospital">Hospital</option>
         <option value="restaurant">Restaurant</option>
@@ -21,13 +43,13 @@
         <option value="atm">ATM</option>
     </select>
     <button onclick="findNearby()">Find Nearest</button>
-    <button onclick="clearResults()">Clear Results</button>
+    <button onclick="clearResults()">Clear Results</button> -->
 
-    <p id="resultCount">Results: 0</p>
     
-    <div id="map"></div>
+    
+    <!-- <div id="map"></div> -->
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
