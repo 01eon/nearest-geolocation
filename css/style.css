@@ -2,43 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-  font-family: Arial, sans-serif;
-  text-align: center;
+body {
+  overscroll-behavior-y: none;
 }
 
-h1 {
-  color: #333;
+.settings {
+  display: none;
+  opacity: 0;
+  transition: display 0.5s;
 }
-
-select, button {
-  padding: 10px;
-  font-size: 16px;
-  margin: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button {
-  background: #007bff;
-  color: white;
-  border: none;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-#resultCount {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-#map {
-  width: 80%;
-  height: 500px;
-  margin: 20px auto;
-  border-radius: 10px;
-  border: 2px solid #333;
-} */

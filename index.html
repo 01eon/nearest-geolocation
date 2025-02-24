@@ -1,36 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find My Nearest</title>
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="css/style-output.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-<body class="m-8 bg-[#303030]">
-    <div class="flex justify-center items-center bg-[#fefefe] p-4">
-        <div class=" flex-none h-[calc(100vh-20vh)] flex flex-col items-start justify-start">
-            <h1 class="text-[#333] font-bold text-4xl">Find My Nearest</h1>
-            <select id="placeType">
-                <option value="hospital">Hospital</option>
-                <option value="restaurant">Restaurant</option>
-                <option value="fuel">Gas Station</option>
-                <option value="pharmacy">Pharmacy</option>
-                <option value="bank">Bank</option>
-                <option value="cafe">Cafe</option>
-                <option value="hotel">Hotel</option>
-                <option value="atm">ATM</option>
-            </select>
-            <button onclick="findNearby()">Find Nearest</button>
-            <button onclick="clearResults()">Clear Results</button>
-            <p id="resultCount">Results: 0</p>
+
+<body class="bg-[#303030]">
+    <div id="errorSection" class="fixed top-2 right-8 z-10 flex flex-col gap-4"></div>
+    <div class="flex justify-center bg-[#fefefe] h-screen">
+
+        <div class="basis-[40rem] p-4 flex flex-col gap-2 bg-[#303030]">
+            <h1 class="text-[#eee] font-bold text-4xl"></h1>
+
+            <div class="settings bg-[#eeeeee98]">
+                <div class="flex flex-col w-full">
+                    <span class="text-sm italic font-medium">Amenity</span>
+                    <select id="placeType" class="p-2 text-lg">
+                        <option value="hospital">Hospital</option>
+                        <option value="restaurant">Restaurant</option>
+                        <option value="fuel">Gas Station</option>
+                        <option value="pharmacy">Pharmacy</option>
+                        <option value="bank">Bank</option>
+                        <option value="cafe">Cafe</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="atm">ATM</option>
+                    </select>
+                </div>
+                <div class="flex flex-col w-full">
+                    <span class="text-sm italic font-medium">Radius</span>
+                    <select id="distance" class="p-2 text-lg ">
+                        <option value="5000">within 5km</option>
+                        <option value="6000">within 6km</option>
+                        <option value="7000">within 7km</option>
+                        <option value="8000">within 8km</option>
+                        <option value="9000">within 9km</option>
+                        <option value="10000">within 10km</option>
+                    </select>
+                </div> 
+                <div class="flex gap-2 justify-end">
+                    <button onclick="findNearby()" class="py-2 px-6 bg-[#21c251] text-[#fefefe] font-semibold shadow-sm shadow-slate-400 hover:opacity-75 duration-300">Find Nearest</button>
+                    <button onclick="clearResults()" class="py-2 px-6 bg-[#fefefe] font-semibold shadow-sm shadow-slate-400 hover:opacity-75 duration-300 ">Clear Results</button>
+                </div>
+               
+            </div>
+
+            <div id="nearbyList" class="flex flex-col gap-2 w-full">
+                <!-- <div class="flex justify-between items-center gap-2 w-full bg-[#fefefe] p-2">
+                    <div class="flex flex-col ">
+                        <h2 class="font-bold text-lg">San Man Mapunta</h2>
+                        <span class="text-sm">Restaurant </span>
+                        <span class="text-sm">123 Sesame Street, Manila</span>
+                        <span class="text-sm">09123456789</span>
+                        <span class="text-sm">9:00</span>
+                    </div>
+                    <button class="py-2 px-6 bg-[#21c251] text-white shadow-sm shadow-slate-400 font-semibold rounded-md hover:opacity-85">Get Directions</button>
+                </div> -->
+                
+                
+            </div>
+
+            
+            <p class="hidden">Results:<span id="resultCount">0</span></p>
         </div>
-        <div class="flex-1">
-            <div id="map" class="w-full"></div>
-        </div>
+        <div id="map" class="h-full w-full"></div>
     </div>
+
     <!-- <h1 class="text-[#ffff]">Find My Nearest</h1>
     <select id="placeType">
         <option value="hospital">Hospital</option>
@@ -45,11 +84,12 @@
     <button onclick="findNearby()">Find Nearest</button>
     <button onclick="clearResults()">Clear Results</button> -->
 
-    
-    
+
+
     <!-- <div id="map"></div> -->
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="js/script.js"></script>
 </body>
+
 </html>
