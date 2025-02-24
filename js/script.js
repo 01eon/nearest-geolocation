@@ -23,7 +23,9 @@ const amenityTypes = {
 
 // Initialize Map
 function initMap() {
+    
     map = L.map('map').setView([0, 0], 13); // Default view
+
 
     // Load OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -33,30 +35,39 @@ function initMap() {
     // Get user's location
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
+            successAlert('Successfully retrieved your location.')
 
-            settings.className = "flex flex-col justify-center gap-3 p-4 bg-[#eeeeee98] rounded-md"
+            settings.classList.add('active');
+            nearbyBlock.classList.add('active');
+
+            userLat = position.coords.latitude;
+            userLon = position.coords.longitude;
 
 
+            // console.log('Position Coords:', position.coords);
+            // const { latitude, longitude } = position.coords;
+            map.setView([userLat, userLon], 15); // Center map on user
 
-            console.log('Position Coords:', position.coords)
-            const { latitude, longitude } = position.coords;
-            map.setView([latitude, longitude], 15); // Center map on user
-
-            userMarker = L.marker([latitude, longitude]).addTo(map)
-                .bindPopup("You are here")
+            userMarker = L.marker([userLat, userLon]).addTo(map)
+                .bindPopup("Current Location")
                 .openPopup();
-        }, () => alert("Unable to access location"));
+        }, () => errAlert("Unable to access location"));
     } else {
         errAlert("Geolocation is not supported by your browser");
     }
 }
 // Find Nearby Places
 function findNearby() {
+    console.log('clicked')
     const distance = document.querySelector('#distance').value;
 
     const placeType = document.getElementById("placeType").value;
 
-    if (!map) return alert("Map is not initialized yet!");
+    if (!map) return errAlert("Map is not initialized yet!");
+
+    const userLat = position.coords.latitude;
+    const userLon = position.coords.longitude;
+    console.log(userLat);
 
     navigator.geolocation.getCurrentPosition(position => {
         const { latitude, longitude } = position.coords;
@@ -99,9 +110,9 @@ function findNearby() {
                     placeMarkers.push(marker);
 
                     const nearMe = `
-                            <div class="flex justify-between items-center gap-2 w-full bg-[#fefefe] p-2">
+                            <div class=" flex justify-between items-center gap-2 w-full bg-[#fefefe] p-2">
                                 <div class="flex flex-col ">
-                                    <h2 class="font-bold text-lg">${name}</h2>
+                                    <h2 class="font-bold text-lg leading-none">${name}</h2>
                                     <span class="text-sm">${address}</span>
                                     <span class="text-sm">${phone}</span>
                                     <span class="text-sm">${openingHours}</span>
@@ -112,11 +123,12 @@ function findNearby() {
 
                     nearbyBlock.innerHTML += nearMe;
 
-                    console.log('Results found. Please zoom in/out your map.');
+                    successAlert('Results found. Please zoom in/out your map.');
                 });
             })
-            .catch(error => console.error("Error fetching data:", error));
-    }, () => alert("Unable to access location"));
+            .catch(error => errAlert("Error fetching data:", error));
+    }, () => errAlert("Unable to access location"));
+    console.log('after click')
 }
 
 // Directions Placeholder Function
@@ -132,6 +144,59 @@ function clearResults(){
     placeMarkers = [];
 }
 
+// Error Message
+function errAlert(errText) {
+    const alertBox = document.createElement('div');
+    alertBox.className = 'feedbackAlert fixed bottom-[20px] bg-[#fcefc5] text-white rounded-sm shadow-sm shadow-slate-300 opacity-1 duration-500 ease flex items-center gap-2 w-[25rem]';
+    alertBox.innerHTML = `
+        <div class="bg-[#b81616] py-3 px-3 h-full flex justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 24 24">
+                <path fill="#f2f2f2" d="M12 17q.425 0 .713-.288T13 16t-.288-.712T12 15t-.712.288T11 16t.288.713T12 17m0-4q.425 0 .713-.288T13 12V8q0-.425-.288-.712T12 7t-.712.288T11 8v4q0 .425.288.713T12 13m0 9q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8" />
+            </svg>
+        </div>
+        <span class="text-black px-2">${errText}</span>
+    `;
 
+    // append to body
+    errorSection.appendChild(alertBox);
+
+    // Set a timeout to hide the alert
+    setTimeout(() => {
+        alertBox.classList.add('hidden');
+
+        // Remove the alert from the DOM after fading out
+        setTimeout(() => {
+            alertBox.remove();
+
+        }, 500) // Match the CSS transition duration
+    }, 5000) // Display for 5 seconds.
+}
+
+function successAlert(successText) {
+    const alertBox = document.createElement('div');
+    alertBox.className = 'feedbackAlert fixed bottom-[20px] bg-[#fcefc5] text-white rounded-sm shadow-sm shadow-slate-300 opacity-1 duration-500 ease flex items-center gap-2 w-[25rem]';
+    alertBox.innerHTML = `
+        <div class="bg-[#31bb24] py-3 px-3 h-full flex justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 24 24">
+                <path fill="#f2f2f2" d="M12 17q.425 0 .713-.288T13 16t-.288-.712T12 15t-.712.288T11 16t.288.713T12 17m0-4q.425 0 .713-.288T13 12V8q0-.425-.288-.712T12 7t-.712.288T11 8v4q0 .425.288.713T12 13m0 9q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8" />
+            </svg>
+        </div>
+        <span class="text-black px-2">${successText}</span>
+    `;
+
+    // append to body
+    document.body.appendChild(alertBox);
+
+    // Set a timeout to hide the alert
+    setTimeout(() => {
+        alertBox.classList.add('hidden');
+
+        // Remove the alert from the DOM after fading out
+        setTimeout(() => {
+            alertBox.remove();
+
+        }, 500) // Match the CSS transition duration
+    }, 5000) // Display for 3 seconds.
+}
 
 window.onload = initMap;

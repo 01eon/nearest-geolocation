@@ -5,19 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find My Nearest</title>
+    <link rel="icon" href="img/logo.png">
 
+    <!-- Tailwind -->
     <link rel="stylesheet" href="css/style-output.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/custom-style.css">
+
+    <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
 <body class="bg-[#303030]">
-    <div id="errorSection" class="fixed top-2 right-8 z-10 flex flex-col gap-4"></div>
+    <div id="errorSection" class="fixed bottom-4 left-6 z-90 flex flex-col gap-4 w-full">
+    </div>
     <div class="flex justify-center bg-[#fefefe] h-screen">
 
-        <div class="basis-[40rem] p-4 flex flex-col gap-2 bg-[#303030]">
-            <h1 class="text-[#eee] font-bold text-4xl"></h1>
+        <div class="basis-[45rem] p-4 flex flex-col gap-2 bg-[#303030]">
+            <div class="flex items-center justify-center w-full">
+                <img src="img/logo-name.png" alt="logo:nearest" class="w-3/4">
 
-            <div class="settings bg-[#eeeeee98]">
+            </div>
+
+            <div class="settings">
                 <div class="flex flex-col w-full">
                     <span class="text-sm italic font-medium">Amenity</span>
                     <select id="placeType" class="p-2 text-lg">
@@ -49,17 +60,7 @@
                
             </div>
 
-            <div id="nearbyList" class="flex flex-col gap-2 w-full">
-                <!-- <div class="flex justify-between items-center gap-2 w-full bg-[#fefefe] p-2">
-                    <div class="flex flex-col ">
-                        <h2 class="font-bold text-lg">San Man Mapunta</h2>
-                        <span class="text-sm">Restaurant </span>
-                        <span class="text-sm">123 Sesame Street, Manila</span>
-                        <span class="text-sm">09123456789</span>
-                        <span class="text-sm">9:00</span>
-                    </div>
-                    <button class="py-2 px-6 bg-[#21c251] text-white shadow-sm shadow-slate-400 font-semibold rounded-md hover:opacity-85">Get Directions</button>
-                </div> -->
+            <div id="nearbyList">
                 
                 
             </div>
@@ -67,7 +68,7 @@
             
             <p class="hidden">Results:<span id="resultCount">0</span></p>
         </div>
-        <div id="map" class="h-full w-full"></div>
+        <div id="map" class="h-full w-full z-10"></div>
     </div>
 
     <!-- <h1 class="text-[#ffff]">Find My Nearest</h1>
