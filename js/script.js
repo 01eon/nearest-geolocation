@@ -23,7 +23,7 @@ const amenityTypes = {
 
 // Initialize Map
 function initMap() {
-    
+
     map = L.map('map').setView([0, 0], 13); // Default view
 
 
@@ -58,77 +58,82 @@ function initMap() {
 }
 // Find Nearby Places
 function findNearby() {
-    console.log('clicked')
+    console.log('clicked');
     const distance = document.querySelector('#distance').value;
-
     const placeType = document.getElementById("placeType").value;
 
     if (!map) return errAlert("Map is not initialized yet!");
+    if (!userLat || !userLon) return errAlert("User location not available!");
 
-    const userLat = position.coords.latitude;
-    const userLon = position.coords.longitude;
-    console.log(userLat);
+    // Use stored location instead of requesting it again
+    const query = `
+        [out:json];
+        node(around:${distance}, ${userLat}, ${userLon})["amenity"="${amenityTypes[placeType]}"];
+        out;
+    `;
+    const overpassURL = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
 
-    navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        
-        // Construct Overpass API Query
-        const query = `
-            [out:json];
-            node(around:${distance}, ${latitude}, ${longitude})["amenity"="${amenityTypes[placeType]}"];
-            out;
-        `;
-        const overpassURL = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
+    fetch(overpassURL)
+        .then(response => response.json())
+        .then(data => {
+            // Clear old markers
+            nearbyBlock.innerHTML = '';
+            placeMarkers.forEach(marker => map.removeLayer(marker));
+            placeMarkers = [];
 
-        fetch(overpassURL)
-            .then(response => response.json())
-            .then(data => {
-                // Clear old markers
-                nearbyBlock.innerHTML = '';
-                placeMarkers.forEach(marker => map.removeLayer(marker));
-                placeMarkers = [];
+            console.log('Raw API Response', data);
 
-                console.log(data)
-                data.elements.forEach(place => {
-                    
-                    const { lat, lon, tags } = place;
-                    const name = tags.name || "Unknown";
-                    const address = `${tags["addr:street"] || "No address"} ${tags["addr:city"] || ""}`;
-                    const openingHours = tags.opening_hours || "Unknown";
-                    const phone = tags.phone || "No contact";
+            // console.log(data);
+            data.elements.forEach(place => {
+                const {
+                    lat,
+                    lon,
+                    tags
+                } = place;
 
-                    const marker = L.marker([lat, lon]).addTo(map)
-                        .bindPopup(`
-                            <div class="flex flex-col gap-1">
-                                <span class="font-bold">${name}</span>
-                                <span>📍 ${address}</span>
-                                <span>⏰ Open: ${openingHours}</span>
-                                <span>📞 ${phone}</span>
-                                <button onclick="getDirections(${latitude}, ${longitude}, ${place.lat}, ${place.lon})"></button>
-                            </div>  
-                        `);
-                    placeMarkers.push(marker);
+                console.log('Available Tags:', place.tags);
 
+                const name = tags.name || "Unknown";
+                const address = `${tags["addr:street"] || "Not Available"} ${tags["addr:city"] || ""}`;
+                const openingHours = tags.opening_hours || "Not Available";
+                const phone = tags.phone || "Not Available";
+
+                const marker = L.marker([lat, lon]).addTo(map)
+                    .bindPopup(`
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold">${name}</span>
+                            <span>📍 ${address}</span>
+                            <span>⏰ Open: ${openingHours}</span>
+                            <span>📞 ${phone}</span>
+                            <button onclick="getDirections(${userLat}, ${userLon}, ${lat}, ${lon})">Get Directions</button>
+                        </div>  
+                    `);
+                placeMarkers.push(marker);
+
+                if (name != 'Unknown') {
                     const nearMe = `
-                            <div class=" flex justify-between items-center gap-2 w-full bg-[#fefefe] p-2">
-                                <div class="flex flex-col ">
-                                    <h2 class="font-bold text-lg leading-none">${name}</h2>
-                                    <span class="text-sm">${address}</span>
-                                    <span class="text-sm">${phone}</span>
-                                    <span class="text-sm">${openingHours}</span>
-                                </div>
-                                <button onclick="getDirections(${latitude}, ${longitude}, ${place.lat}, ${place.lon})" class="py-2 px-6 bg-[#21c251] text-white shadow-sm shadow-slate-400 font-semibold rounded-md hover:opacity-85">Get Directions</button>
-                            </div>
-                    `
+                    <div class="flex justify-between items-center gap-2 w-full bg-[#fefefe] p-2">
+                        <div class="flex flex-col w-1/2">
+                            <h2 class="font-bold text-lg leading-none">${name}</h2>
+                            <span class="text-sm">${address}</span>
+                            <span class="text-sm">${phone}</span>
+                            <span class="text-sm">${openingHours}</span>
+                        </div>
+                        <button onclick="getDirections(${userLat}, ${userLon}, ${lat}, ${lon})" class="py-2 px-6 bg-[#21c251] text-white shadow-sm shadow-slate-400 font-semibold rounded-md hover:opacity-85">
+                            Get Directions
+                        </button>
+                    </div>
+             `;
 
                     nearbyBlock.innerHTML += nearMe;
 
                     successAlert('Results found. Please zoom in/out your map.');
-                });
-            })
-            .catch(error => errAlert("Error fetching data:", error));
-    }, () => errAlert("Unable to access location"));
-    console.log('after click')
+                }
+
+
+            });
+        })
+        .catch(error => errAlert("Error fetching data:", error));
 }
 
 // Directions Placeholder Function
@@ -138,7 +143,7 @@ function getDirections(userLat, userLon, placeLat, placeLon) {
 }
 
 // Clear Results
-function clearResults(){
+function clearResults() {
     nearbyBlock.innerHTML = '';
     placeMarkers.forEach(marker => map.removeLayer(marker));
     placeMarkers = [];
