@@ -5,6 +5,7 @@ let placeMarkers = [];
 const errorSection = document.querySelector('#errorSection');
 const settings = document.querySelector('.settings');
 const nearbyBlock = document.querySelector('#nearbyList');
+const modal = document.querySelector('#modal');
 
 
 
@@ -149,6 +150,11 @@ function clearResults() {
     placeMarkers = [];
 }
 
+function modalAgree(){
+    modal.classList.remove('active');
+    initMap();
+}
+
 // Error Message
 function errAlert(errText) {
     const alertBox = document.createElement('div');
@@ -204,4 +210,4 @@ function successAlert(successText) {
     }, 5000) // Display for 3 seconds.
 }
 
-window.onload = initMap;
+// window.onload = initMap;

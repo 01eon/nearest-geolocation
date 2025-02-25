@@ -31,7 +31,7 @@ body {
     gap: 0.5rem;
     width: 100%;
     padding: 0.25rem;
-    height: calc(100vh-50vh);
+    height: calc(100vh-70vh);
     overflow-y: auto;
 }
 
@@ -53,6 +53,20 @@ body {
 }
 
 
-/* fixed top-[20px] bg-[#b81616] text-white py-[15px] px-[20px] rounded-sm shadow-sm shadow-slate-300 opacity-1 duration-500 ease flex items-center gap-2
+#modal {
+    z-index: 1000;
+    opacity: 0;
+    display: none;
+    transition: all 0.5s;
+}
 
-*/
+#modal.active {
+    opacity: 1;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000085;
+}
