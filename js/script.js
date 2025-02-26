@@ -1,6 +1,12 @@
 let map;
 let userMarker;
 let placeMarkers = [];
+let distance;
+let distanceMobile;
+let placeType;
+let placeTypeMobile;
+let mobileArrBool = true;
+
 
 const errorSection = document.querySelector('#errorSection');
 const settings = document.querySelector('.settings');
@@ -8,7 +14,7 @@ const nearbyBlock = document.querySelector('#nearbyList');
 const modal = document.querySelector('#modal');
 const mapEl = document.querySelector('#map');
 const mobileArr = document.querySelector('#mobileArr');
-let mobileArrBool = true;
+
 
 
 
@@ -66,8 +72,8 @@ function initMap() {
 function findNearby() {
 
     if ((window.innerWidth >= 360 && window.innerWidth <= 768)){
-        const distanceMobile = document.querySelector('.distanceMobile').value;
-        const placeTypeMobile = document.querySelector('.placeTypeMobile').value;
+        distanceMobile = document.querySelector('.distanceMobile').value;
+        placeTypeMobile = document.querySelector('.placeTypeMobile').value;
 
         // Use stored location instead of requesting it again
         const query = `
@@ -85,18 +91,14 @@ function findNearby() {
             placeMarkers.forEach(marker => map.removeLayer(marker));
             placeMarkers = [];
 
-            // For Mobile and Tablet
-            if (window.innerWidth >= 360 && window.innerWidth <= 768){
+            
 
                 mobileArr.classList.add('active');
                 mobileArr.innerHTML = `
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"/></svg>
                 `
 
-            } else if (window.innerWidth > 768){
-                mobileArr.remove();
-            }
-
+            
             nearbyBlock.classList.add('active');
 
             
@@ -154,8 +156,8 @@ function findNearby() {
         .catch(error => errAlert("Error fetching data:", error));
 
     } else if (window.innerWidth > 768) {
-        const distance = document.querySelector('.distance').value;
-        const placeType = document.querySelector(".placeType").value;
+        distance = document.querySelector('.distance').value;
+        placeType = document.querySelector(".placeType").value;
     
         if (!map) return errAlert("Map is not initialized yet!");
         if (!userLat || !userLon) return errAlert("User location not available!");
@@ -246,7 +248,7 @@ function findNearby() {
         .catch(error => errAlert("Error fetching data:", error));
         mobileArr.remove();
     }
-        mobileArrBool = true;
+    mobileArrBool = true;
 }
 
 function closeSidebarMobile(){
