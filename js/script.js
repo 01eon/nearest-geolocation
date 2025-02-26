@@ -6,6 +6,9 @@ const errorSection = document.querySelector('#errorSection');
 const settings = document.querySelector('.settings');
 const nearbyBlock = document.querySelector('#nearbyList');
 const modal = document.querySelector('#modal');
+const mapEl = document.querySelector('#map');
+const mobileArr = document.querySelector('#mobileArr');
+let mobileArrBool = true;
 
 
 
@@ -39,7 +42,7 @@ function initMap() {
             successAlert('Successfully retrieved your location.')
 
             settings.classList.add('active');
-            nearbyBlock.classList.add('active');
+            // nearbyBlock.classList.add('active');
 
             userLat = position.coords.latitude;
             userLon = position.coords.longitude;
@@ -59,12 +62,13 @@ function initMap() {
 }
 // Find Nearby Places
 function findNearby() {
-    console.log('clicked');
-    const distance = document.querySelector('#distance').value;
-    const placeType = document.getElementById("placeType").value;
+    const distance = document.querySelector('.distance').value;
+    const placeType = document.querySelector(".placeType").value;
 
     if (!map) return errAlert("Map is not initialized yet!");
     if (!userLat || !userLon) return errAlert("User location not available!");
+
+    
 
     // Use stored location instead of requesting it again
     const query = `
@@ -82,7 +86,19 @@ function findNearby() {
             placeMarkers.forEach(marker => map.removeLayer(marker));
             placeMarkers = [];
 
-            console.log('Raw API Response', data);
+            // For Mobile and Tablet
+            if (window.innerWidth >= 360 && window.innerWidth <= 768){
+                mobileArr.classList.add('active');
+                mobileArr.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"/></svg>
+                `
+
+            } 
+
+            nearbyBlock.classList.add('active');
+
+            
+            // console.log('Raw API Response', data);
 
             // console.log(data);
             data.elements.forEach(place => {
@@ -92,7 +108,6 @@ function findNearby() {
                     tags
                 } = place;
 
-                console.log('Available Tags:', place.tags);
 
                 const name = tags.name || "Unknown";
                 const address = `${tags["addr:street"] || "Not Available"} ${tags["addr:city"] || ""}`;
@@ -113,18 +128,18 @@ function findNearby() {
 
                 if (name != 'Unknown') {
                     const nearMe = `
-                    <div class="flex justify-between items-center gap-2 w-full bg-[#fefefe] p-2">
-                        <div class="flex flex-col w-1/2">
-                            <h2 class="font-bold text-lg leading-none">${name}</h2>
-                            <span class="text-sm">${address}</span>
-                            <span class="text-sm">${phone}</span>
-                            <span class="text-sm">${openingHours}</span>
+                        <div class="flex flex-row justify-between mobileSM:h-[40vh] items-center w-[95vw] gap-2 bg-[#fefefe] p-2">
+                            <div class="flex flex-col w-1/2">
+                                <h2 class="font-bold text-lg leading-none">${name}</h2>
+                                <span class="text-sm">${address}</span>
+                                <span class="text-sm">${phone}</span>
+                                <span class="text-sm">${openingHours}</span>
+                            </div>
+                            <button onclick="getDirections(${userLat}, ${userLon}, ${lat}, ${lon})" class="mobileSM:py-1 laptop:py-2 mobileSM:px-3 laptop:px-6 bg-[#21c251] text-white shadow-sm shadow-slate-400 font-semibold rounded-md hover:opacity-85">
+                                Get Directions
+                            </button>
                         </div>
-                        <button onclick="getDirections(${userLat}, ${userLon}, ${lat}, ${lon})" class="py-2 px-6 bg-[#21c251] text-white shadow-sm shadow-slate-400 font-semibold rounded-md hover:opacity-85">
-                            Get Directions
-                        </button>
-                    </div>
-             `;
+                    `;
 
                     nearbyBlock.innerHTML += nearMe;
 
@@ -135,6 +150,29 @@ function findNearby() {
             });
         })
         .catch(error => errAlert("Error fetching data:", error));
+        
+}
+
+function closeSidebarMobile(){
+    console.log('MobileArrBool (Before):', mobileArrBool);
+
+    if (mobileArrBool){
+        nearbyBlock.classList.remove('active');
+        // mobileArr.classList.remove('active');
+        mobileArr.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m4 15l8-8l8 8l-2 2l-6-6l-6 6z"/></svg>
+        `;
+
+        mobileArrBool = false;
+        console.log('MobileArrBool (After):', mobileArrBool);
+    } else {
+        nearbyBlock.classList.add('active');
+        mobileArr.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"/></svg>
+        `;
+        mobileArrBool = true;
+    }
+    
 }
 
 // Directions Placeholder Function
@@ -148,11 +186,14 @@ function clearResults() {
     nearbyBlock.innerHTML = '';
     placeMarkers.forEach(marker => map.removeLayer(marker));
     placeMarkers = [];
+    nearbyBlock.classList.remove('active');
+    mobileArr.classList.remove('active');
 }
 
 function modalAgree(){
     modal.classList.remove('active');
     initMap();
+    // requestLocation();
 }
 
 // Error Message
@@ -210,4 +251,4 @@ function successAlert(successText) {
     }, 5000) // Display for 3 seconds.
 }
 
-// window.onload = initMap;
+console.log(`Window\'s Inner Width`, window.innerWidth);

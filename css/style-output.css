@@ -558,12 +558,16 @@ video {
   position: fixed;
 }
 
-.relative {
-  position: relative;
+.absolute {
+  position: absolute;
 }
 
-.bottom-0 {
-  bottom: 0px;
+.-top-5 {
+  top: -1.25rem;
+}
+
+.bottom-2 {
+  bottom: 0.5rem;
 }
 
 .bottom-4 {
@@ -578,8 +582,28 @@ video {
   left: 1.5rem;
 }
 
-.bottom-2 {
-  bottom: 0.5rem;
+.left-1\/2 {
+  left: 50%;
+}
+
+.left-12 {
+  left: 3rem;
+}
+
+.left-\[12\] {
+  left: 12;
+}
+
+.left-\[11rem\] {
+  left: 11rem;
+}
+
+.left-\[10\.5rem\] {
+  left: 10.5rem;
+}
+
+.left-\[10rem\] {
+  left: 10rem;
 }
 
 .z-10 {
@@ -610,52 +634,24 @@ video {
   width: 50%;
 }
 
-.w-3\/4 {
-  width: 75%;
-}
-
 .w-\[25rem\] {
   width: 25rem;
+}
+
+.w-\[95vw\] {
+  width: 95vw;
 }
 
 .w-full {
   width: 100%;
 }
 
-.w-\[\] {
-  width: ;
-}
-
-.w-\[50rem\] {
-  width: 50rem;
-}
-
 .w-screen {
   width: 100vw;
 }
 
-.w-\[30rem\] {
-  width: 30rem;
-}
-
-.w-8 {
-  width: 2rem;
-}
-
-.w-32 {
-  width: 8rem;
-}
-
-.w-\[15rem\] {
-  width: 15rem;
-}
-
-.w-\[20rem\] {
-  width: 20rem;
-}
-
-.basis-\[45rem\] {
-  flex-basis: 45rem;
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-col {
@@ -686,12 +682,16 @@ video {
   gap: 0.5rem;
 }
 
+.gap-3 {
+  gap: 0.75rem;
+}
+
 .gap-4 {
   gap: 1rem;
 }
 
-.text-ellipsis {
-  text-overflow: ellipsis;
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .rounded-md {
@@ -700,6 +700,10 @@ video {
 
 .rounded-sm {
   border-radius: 0.125rem;
+}
+
+.bg-\[\#00000085\] {
+  background-color: #00000085;
 }
 
 .bg-\[\#21c251\] {
@@ -722,6 +726,10 @@ video {
   background-color: rgb(184 22 22 / var(--tw-bg-opacity, 1));
 }
 
+.bg-\[\#eeeeee98\] {
+  background-color: #eeeeee98;
+}
+
 .bg-\[\#fcefc5\] {
   --tw-bg-opacity: 1;
   background-color: rgb(252 239 197 / var(--tw-bg-opacity, 1));
@@ -732,39 +740,8 @@ video {
   background-color: rgb(254 254 254 / var(--tw-bg-opacity, 1));
 }
 
-.bg-\[white\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#000\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#00000079\] {
-  background-color: #00000079;
-}
-
-.bg-\[\#0000004b\] {
-  background-color: #0000004b;
-}
-
-.bg-\[\#00000085\] {
-  background-color: #00000085;
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\] {
-  background-color: ;
-}
-
-.bg-\[30rem\] {
-  background-position: 30rem;
+.p-1 {
+  padding: 0.25rem;
 }
 
 .p-2 {
@@ -773,10 +750,6 @@ video {
 
 .p-4 {
   padding: 1rem;
-}
-
-.p-3 {
-  padding: 0.75rem;
 }
 
 .px-2 {
@@ -794,6 +767,16 @@ video {
   padding-right: 1.5rem;
 }
 
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -802,11 +785,6 @@ video {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}
-
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
 }
 
 .pb-4 {
@@ -819,6 +797,11 @@ video {
 
 .text-justify {
   text-align: justify;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .text-lg {
@@ -886,12 +869,21 @@ video {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.shadow-slate-700 {
+  --tw-shadow-color: #334155;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+.duration-200 {
+  transition-duration: 200ms;
 }
 
 .duration-300 {
@@ -902,20 +894,8 @@ video {
   transition-duration: 500ms;
 }
 
-.duration-200 {
-  transition-duration: 200ms;
-}
-
 .\[out\:json\] {
   out: json;
-}
-
-.hover\:text-\[\]:hover {
-  color: ;
-}
-
-.hover\:text-\[\#21c51\]:hover {
-  color: #21c51;
 }
 
 .hover\:text-\[\#21c251\]:hover {
@@ -931,9 +911,141 @@ video {
   opacity: 0.85;
 }
 
+@media (min-width: 20em) {
+  .mobileSM\:absolute {
+    position: absolute;
+  }
+
+  .mobileSM\:bottom-0 {
+    bottom: 0px;
+  }
+
+  .mobileSM\:z-\[1000\] {
+    z-index: 1000;
+  }
+
+  .mobileSM\:flex {
+    display: flex;
+  }
+
+  .mobileSM\:hidden {
+    display: none;
+  }
+
+  .mobileSM\:h-\[30vh\] {
+    height: 30vh;
+  }
+
+  .mobileSM\:h-\[40vh\] {
+    height: 40vh;
+  }
+
+  .mobileSM\:w-1\/2 {
+    width: 50%;
+  }
+
+  .mobileSM\:w-\[95vw\] {
+    width: 95vw;
+  }
+
+  .mobileSM\:w-\[calc\(100vw-10vw\)\] {
+    width: calc(100vw - 10vw);
+  }
+
+  .mobileSM\:flex-row {
+    flex-direction: row;
+  }
+
+  .mobileSM\:flex-col {
+    flex-direction: column;
+  }
+
+  .mobileSM\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .mobileSM\:p-1 {
+    padding: 0.25rem;
+  }
+
+  .mobileSM\:px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .mobileSM\:py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .mobileSM\:text-\[12px\] {
+    font-size: 12px;
+  }
+
+  .mobileSM\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
 @media (min-width: 64em) {
+  .laptop\:relative {
+    position: relative;
+  }
+
+  .laptop\:flex {
+    display: flex;
+  }
+
+  .laptop\:hidden {
+    display: none;
+  }
+
+  .laptop\:h-\[calc\(100vh-70vh\)\] {
+    height: calc(100vh - 70vh);
+  }
+
+  .laptop\:w-3\/4 {
+    width: 75%;
+  }
+
   .laptop\:w-\[50rem\] {
     width: 50rem;
+  }
+
+  .laptop\:w-full {
+    width: 100%;
+  }
+
+  .laptop\:basis-\[45rem\] {
+    flex-basis: 45rem;
+  }
+
+  .laptop\:flex-col {
+    flex-direction: column;
+  }
+
+  .laptop\:justify-center {
+    justify-content: center;
+  }
+
+  .laptop\:p-2 {
+    padding: 0.5rem;
+  }
+
+  .laptop\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .laptop\:py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .laptop\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 
