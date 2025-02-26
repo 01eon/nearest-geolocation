@@ -188,6 +188,7 @@ function clearResults() {
     placeMarkers = [];
     nearbyBlock.classList.remove('active');
     mobileArr.classList.remove('active');
+    mobileArrBool = true;
 }
 
 function modalAgree(){
