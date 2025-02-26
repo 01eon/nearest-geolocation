@@ -75,6 +75,7 @@ function findNearby() {
         distanceMobile = document.querySelector('.distanceMobile').value;
         placeTypeMobile = document.querySelector('.placeTypeMobile').value;
 
+
         // Use stored location instead of requesting it again
         const query = `
             [out:json];
@@ -93,10 +94,10 @@ function findNearby() {
 
             
 
-                mobileArr.classList.add('active');
-                mobileArr.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"/></svg>
-                `
+            mobileArr.classList.add('active');
+            mobileArr.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"/></svg>
+            `
 
             
             nearbyBlock.classList.add('active');
@@ -155,9 +156,19 @@ function findNearby() {
         })
         .catch(error => errAlert("Error fetching data:", error));
 
+        mobileArrBool = true;
+
+        console.log(placeTypeMobile);
+        // placeTypeMobile = placeType;
+        // distanceMobile = distance;
+
+
     } else if (window.innerWidth > 768) {
         distance = document.querySelector('.distance').value;
         placeType = document.querySelector(".placeType").value;
+
+        console.log('distance:', distance);
+        console.log('placeType:', placeType)
     
         if (!map) return errAlert("Map is not initialized yet!");
         if (!userLat || !userLon) return errAlert("User location not available!");
@@ -247,8 +258,13 @@ function findNearby() {
         })
         .catch(error => errAlert("Error fetching data:", error));
         mobileArr.remove();
+
+        placeType = placeTypeMobile;
+        distance = distanceMobile;
     }
-    mobileArrBool = true;
+
+    console.log('PlaceTypeMobile value after if-else:', placeTypeMobile);
+
 }
 
 function closeSidebarMobile(){

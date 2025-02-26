@@ -1099,6 +1099,14 @@ video {
     height: calc(100vh - 70vh);
   }
 
+  .laptop\:h-\[50vh\] {
+    height: 50vh;
+  }
+
+  .laptop\:h-\[55vh\] {
+    height: 55vh;
+  }
+
   .laptop\:w-3\/4 {
     width: 75%;
   }
