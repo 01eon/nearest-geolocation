@@ -22,20 +22,20 @@
     </div>
     <div class="flex justify-center bg-[#fefefe] h-screen">
 
-        <div class="sidebar mobileSM:absolute mobileSM:bottom-0 mobileSM:z-[1000] laptop:relative laptop:basis-[45rem] p-4 flex flex-col gap-2 bg-[#303030]">
-            <button id="mobileArr" onclick="closeSidebarMobile()" class="laptop:hidden bg-[#303030]  text-white justify-center absolute -top-5 left-[10rem]">
-                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"/></svg> -->
+        <div class="sidebar mobileSM:absolute mobileSM:bottom-0 mobileSM:z-[1000] mobileSM:w-screen laptop:relative laptop:basis-[45rem] p-4 flex flex-col gap-2 bg-[#303030]">
+            <button id="mobileArr" onclick="closeSidebarMobile()" class="laptop:hidden bg-[#303030]  text-white justify-center absolute -top-5 mobileSM:left-[42%] tablet:left-[46%]">
+                
             </button>
             <div class="flex items-center mobileSM:justify-start laptop:justify-center w-full">
                 <img src="img/logo-name.png" alt="logo:nearest" class="mobileSM:w-1/2 laptop:w-3/4">
             </div>
 
-            <div class="settings bg-[#eeeeee98] mobileSM:w-[95vw] mobileSM:flex-row laptop:flex-col gap-3 p-4 rounded-md">
-                <div class="laptop:hidden mobileSM:flex flex-col gap-2">
+            <div class="settings bg-[#eeeeee98] mobileSM:w-[95vw] mobileSM:flex-row mobileSM:justify-center mobileSM:p-2 laptop:flex-col gap-3 laptop:p-4 rounded-md">
+                <div class="laptop:hidden mobileSM:flex flex-col gap-2 mobileSM:w-full">
                     <div class="flex justify-center gap-1">
-                        <div class="laptop:flex flex-col w-full">
-                            <span class="text-sm italic font-medium">Amenity</span>
-                            <select class="placeType text-base p-1 w-full">
+                        <div class="tablet:flex flex-col w-full">
+                            <span class="mobileSM:text-sm tablet:text-lg italic font-medium tablet:w-full">Amenity</span>
+                            <select class="placeType mobileSM:text-base tablet:text-xl p-1 w-full">
                                 <option value="hospital">Hospital</option>
                                 <option value="restaurant">Restaurant</option>
                                 <option value="fuel">Gas Station</option>
@@ -46,9 +46,9 @@
                                 <option value="atm">ATM</option>
                             </select>
                         </div>
-                        <div class="laptop:flex flex-col w-full">
-                            <span class="text-sm italic font-medium">Radius</span>
-                            <select class="distance text-base p-1 w-full">
+                        <div class="tablet:flex flex-col w-full">
+                            <span class="mobileSM:text-sm tablet:text-lg italic font-medium">Radius</span>
+                            <select class="distance mobileSM:text-base tablet:text-xl p-1 w-full">
                                 <option value="5000">within 5km</option>
                                 <option value="6000">within 6km</option>
                                 <option value="7000">within 7km</option>
@@ -59,8 +59,8 @@
                         </div> 
                     </div>
                     <div class="flex justify-end gap-2">
-                        <button onclick="findNearby()" class="py-1 px-3 bg-[#21c251] text-[#fefefe] font-semibold shadow-sm shadow-slate-400 hover:opacity-75 duration-300">Find Nearest</button>
-                        <button onclick="clearResults()" class="py-1 px-3 bg-[#fefefe] font-semibold shadow-sm shadow-slate-400 hover:opacity-75 duration-300 ">Clear Results</button>
+                        <button onclick="findNearby()" class="py-1 px-3 bg-[#21c251] text-[#fefefe] mobileSM:text-base tablet:text-xl font-semibold shadow-sm shadow-slate-400 hover:opacity-75 duration-300">Find Nearest</button>
+                        <button onclick="clearResults()" class="py-1 px-3 bg-[#fefefe] mobileSM:text-base tablet:text-xl font-semibold shadow-sm shadow-slate-400 hover:opacity-75 duration-300 ">Clear Results</button>
                     </div>
                 </div>
                 <div class="mobileSM:hidden laptop:flex flex-col w-full">
@@ -110,11 +110,11 @@
         <div id="modal" class="active justify-center items-center bg-[#00000085] w-screen h-screen">
             <div class="flex flex-col justify-center items-center bg-[#303030] text-white mobileSM:w-[calc(100vw-10vw)] laptop:w-[50rem] p-4 rounded-md">
                 <img src="img/logo-name.png" alt="logo:nearest" class="w-[25rem]">
-                <p class="text-sm pb-4">&copy; 2025. Created by Gabriel Austria</p>
-                <p class="mobileSM:text-[12px] text-justify p-2"><span class="font-bold">Nearest</span> is a JavaScript Project that uses <a href="https://leafletjs.com" target="_blank" class="no-underline hover:text-[#21c251] font-bold duration-200">Leaflet</a>, an open-source JavaScript Library used for interactive maps, and <a href="https://osmfoundation.org" target="_blank" class="hover:text-[#21c251] font-bold duration-200 no-underline">OpenStreetMap</a>, an open-source mapping platform that provides geographical data through APIs.</p>
-                <p class="mobileSM:text-[12px] text-justify p-2">The location data provided in this project is sourced from OpenStreetMap (OSM), a community-driven project, so you might notice outdated, incomplete, or incorrect data. OSM was used as an alternative for Google Maps.</p>
-                <p class="mobileSM:text-[12px] text-justify p-2">By pressing the button below, you understand that this project is only a portfolio demonstration and is not affliated with OpenStreetMap or any of the services displayed. </p>
-                <button onclick="modalAgree()" class="mt-2 py-2 px-8 bg-[#21c251] text-[#fefefe] font-bold rounded-md shadow-sm shadow-slate-400 hover:opacity-75 duration-300">Confirm</button>
+                <p class="mobileSM:text-sm tablet:text-base pb-4">&copy; 2025. Created by Gabriel Austria</p>
+                <p class="mobileSM:text-sm tablet:text-lg text-justify p-2"><span class="font-bold">Nearest</span> is a JavaScript Project that uses <a href="https://leafletjs.com" target="_blank" class="no-underline hover:text-[#21c251] font-bold duration-200">Leaflet</a>, an open-source JavaScript Library used for interactive maps, and <a href="https://osmfoundation.org" target="_blank" class="hover:text-[#21c251] font-bold duration-200 no-underline">OpenStreetMap</a>, an open-source mapping platform that provides geographical data through APIs.</p>
+                <p class="mobileSM:text-sm tablet:text-lg text-justify p-2">The location data provided in this project is sourced from OpenStreetMap (OSM), a community-driven project, so you might notice outdated, incomplete, or incorrect data. OSM was used as an alternative for Google Maps.</p>
+                <p class="mobileSM:text-sm tablet:text-lg text-justify p-2">By pressing the button below, you understand that this project is only a portfolio demonstration and is not affliated with OpenStreetMap or any of the services displayed. </p>
+                <button onclick="modalAgree()" class="mt-2 py-2 px-8 bg-[#21c251] mobileSM:text-sm tablet:text-lg text-[#fefefe] font-bold rounded-md shadow-sm shadow-slate-400 hover:opacity-75 duration-300">Confirm</button>
             </div>
         </div>
     </div>

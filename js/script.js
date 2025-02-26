@@ -98,7 +98,7 @@ function findNearby() {
             nearbyBlock.classList.add('active');
 
             
-            // console.log('Raw API Response', data);
+            console.log('Raw API Response', data);
 
             // console.log(data);
             data.elements.forEach(place => {
@@ -150,6 +150,7 @@ function findNearby() {
             });
         })
         .catch(error => errAlert("Error fetching data:", error));
+        mobileArrBool = true;
         
 }
 
