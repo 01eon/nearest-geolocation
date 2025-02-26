@@ -1111,6 +1111,10 @@ video {
     width: 100%;
   }
 
+  .laptop\:w-auto {
+    width: auto;
+  }
+
   .laptop\:basis-\[45rem\] {
     flex-basis: 45rem;
   }

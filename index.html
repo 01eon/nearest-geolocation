@@ -22,7 +22,7 @@
     </div>
     <div class="flex justify-center bg-[#fefefe] h-screen">
 
-        <div class="sidebar mobileSM:absolute mobileSM:bottom-0 mobileSM:z-[1000] mobileSM:w-screen laptop:relative laptop:basis-[45rem] p-4 flex flex-col gap-2 bg-[#303030]">
+        <div class="sidebar mobileSM:absolute mobileSM:bottom-0 mobileSM:z-[1000] laptop:relative laptop:basis-[45rem] p-4 flex flex-col gap-2 bg-[#303030]">
             <button id="mobileArr" onclick="closeSidebarMobile()" class="laptop:hidden bg-[#303030]  text-white justify-center absolute -top-5 mobileSM:left-[42%] tablet:left-[46%]">
                 
             </button>
@@ -30,12 +30,14 @@
                 <img src="img/logo-name.png" alt="logo:nearest" class="mobileSM:w-1/2 laptop:w-3/4">
             </div>
 
-            <div class="settings bg-[#eeeeee98] mobileSM:w-[95vw] mobileSM:flex-row mobileSM:justify-center mobileSM:p-2 laptop:flex-col gap-3 laptop:p-4 rounded-md">
+            <div class="settings bg-[#eeeeee98] mobileSM:w-[95vw] laptop:w-auto mobileSM:flex-row mobileSM:justify-center mobileSM:p-2 laptop:flex-col gap-3 laptop:p-4 rounded-md">
+
+                <!-- [Mobile] Options -->
                 <div class="laptop:hidden mobileSM:flex flex-col gap-2 mobileSM:w-full">
                     <div class="flex justify-center gap-1">
                         <div class="tablet:flex flex-col w-full">
                             <span class="mobileSM:text-sm tablet:text-lg italic font-medium tablet:w-full">Amenity</span>
-                            <select class="placeType mobileSM:text-base tablet:text-xl p-1 w-full">
+                            <select class="placeTypeMobile mobileSM:text-base tablet:text-xl p-1 w-full">
                                 <option value="hospital">Hospital</option>
                                 <option value="restaurant">Restaurant</option>
                                 <option value="fuel">Gas Station</option>
@@ -48,7 +50,7 @@
                         </div>
                         <div class="tablet:flex flex-col w-full">
                             <span class="mobileSM:text-sm tablet:text-lg italic font-medium">Radius</span>
-                            <select class="distance mobileSM:text-base tablet:text-xl p-1 w-full">
+                            <select class="distanceMobile mobileSM:text-base tablet:text-xl p-1 w-full">
                                 <option value="5000">within 5km</option>
                                 <option value="6000">within 6km</option>
                                 <option value="7000">within 7km</option>
@@ -63,9 +65,11 @@
                         <button onclick="clearResults()" class="py-1 px-3 bg-[#fefefe] mobileSM:text-base tablet:text-xl font-semibold shadow-sm shadow-slate-400 hover:opacity-75 duration-300 ">Clear Results</button>
                     </div>
                 </div>
+
+                <!-- [Laptop] Options -->
                 <div class="mobileSM:hidden laptop:flex flex-col w-full">
-                    <span class="text-sm italic font-medium">Amenity</span>
-                    <select class="placeType mobileSM:text-base mobileSM:p-1 laptop:p-2 laptop:text-lg">
+                    <span class="mobileSM:text-sm tablet:text-lg italic font-medium tablet:w-full">Amenity</span>
+                    <select class="placeType mobileSM:text-base tablet:text-xl p-1 w-full">
                         <option value="hospital">Hospital</option>
                         <option value="restaurant">Restaurant</option>
                         <option value="fuel">Gas Station</option>
@@ -77,8 +81,8 @@
                     </select>
                 </div>
                 <div class="mobileSM:hidden laptop:flex flex-col w-full">
-                    <span class="text-sm italic font-medium">Radius</span>
-                    <select class="distance mobileSM:text-base mobileSM:p-1 laptop:p-2 laptop:text-lg">
+                    <span class="mobileSM:text-sm tablet:text-lg italic font-medium">Radius</span>
+                    <select class="distance mobileSM:text-base tablet:text-xl p-1 w-full">
                         <option value="5000">within 5km</option>
                         <option value="6000">within 6km</option>
                         <option value="7000">within 7km</option>

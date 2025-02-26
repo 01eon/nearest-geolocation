@@ -60,25 +60,24 @@ function initMap() {
         errAlert("Geolocation is not supported by your browser");
     }
 }
+
+
 // Find Nearby Places
 function findNearby() {
-    const distance = document.querySelector('.distance').value;
-    const placeType = document.querySelector(".placeType").value;
 
-    if (!map) return errAlert("Map is not initialized yet!");
-    if (!userLat || !userLon) return errAlert("User location not available!");
+    if ((window.innerWidth >= 360 && window.innerWidth <= 768)){
+        const distanceMobile = document.querySelector('.distanceMobile').value;
+        const placeTypeMobile = document.querySelector('.placeTypeMobile').value;
 
-    
+        // Use stored location instead of requesting it again
+        const query = `
+            [out:json];
+            node(around:${distanceMobile}, ${userLat}, ${userLon})["amenity"="${amenityTypes[placeTypeMobile]}"];
+            out;
+        `;
+        const overpassURLMobile = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
 
-    // Use stored location instead of requesting it again
-    const query = `
-        [out:json];
-        node(around:${distance}, ${userLat}, ${userLon})["amenity"="${amenityTypes[placeType]}"];
-        out;
-    `;
-    const overpassURL = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
-
-    fetch(overpassURL)
+        fetch(overpassURLMobile)
         .then(response => response.json())
         .then(data => {
             // Clear old markers
@@ -88,12 +87,15 @@ function findNearby() {
 
             // For Mobile and Tablet
             if (window.innerWidth >= 360 && window.innerWidth <= 768){
+
                 mobileArr.classList.add('active');
                 mobileArr.innerHTML = `
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"/></svg>
                 `
 
-            } 
+            } else if (window.innerWidth > 768){
+                mobileArr.remove();
+            }
 
             nearbyBlock.classList.add('active');
 
@@ -128,7 +130,7 @@ function findNearby() {
 
                 if (name != 'Unknown') {
                     const nearMe = `
-                        <div class="flex flex-row justify-between mobileSM:h-[40vh] items-center w-[95vw] gap-2 bg-[#fefefe] p-2">
+                        <div class="flex flex-row justify-between mobileSM:h-[40vh] items-center mobileSM:w-[95vw] laptop:w-auto gap-2 bg-[#fefefe] p-2">
                             <div class="flex flex-col w-1/2">
                                 <h2 class="font-bold text-lg leading-none">${name}</h2>
                                 <span class="text-sm">${address}</span>
@@ -150,8 +152,101 @@ function findNearby() {
             });
         })
         .catch(error => errAlert("Error fetching data:", error));
+
+    } else if (window.innerWidth > 768) {
+        const distance = document.querySelector('.distance').value;
+        const placeType = document.querySelector(".placeType").value;
+    
+        if (!map) return errAlert("Map is not initialized yet!");
+        if (!userLat || !userLon) return errAlert("User location not available!");
+    
+    
+        // Use stored location instead of requesting it again
+        const query = `
+            [out:json];
+            node(around:${distance}, ${userLat}, ${userLon})["amenity"="${amenityTypes[placeType]}"];
+            out;
+        `;
+        const overpassURL = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
+
+        fetch(overpassURL)
+        .then(response => response.json())
+        .then(data => {
+            // Clear old markers
+            nearbyBlock.innerHTML = '';
+            placeMarkers.forEach(marker => map.removeLayer(marker));
+            placeMarkers = [];
+
+            // For Mobile and Tablet
+            if (window.innerWidth >= 360 && window.innerWidth <= 768){
+
+                mobileArr.classList.add('active');
+                mobileArr.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="36" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"/></svg>
+                `
+
+            } else if (window.innerWidth > 768){
+                mobileArr.remove();
+            }
+
+            nearbyBlock.classList.add('active');
+
+            
+            console.log('Raw API Response', data);
+
+            // console.log(data);
+            data.elements.forEach(place => {
+                const {
+                    lat,
+                    lon,
+                    tags
+                } = place;
+
+
+                const name = tags.name || "Unknown";
+                const address = `${tags["addr:street"] || "Not Available"} ${tags["addr:city"] || ""}`;
+                const openingHours = tags.opening_hours || "Not Available";
+                const phone = tags.phone || "Not Available";
+
+                const marker = L.marker([lat, lon]).addTo(map)
+                    .bindPopup(`
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold">${name}</span>
+                            <span>📍 ${address}</span>
+                            <span>⏰ Open: ${openingHours}</span>
+                            <span>📞 ${phone}</span>
+                            <button onclick="getDirections(${userLat}, ${userLon}, ${lat}, ${lon})">Get Directions</button>
+                        </div>  
+                    `);
+                placeMarkers.push(marker);
+
+                if (name != 'Unknown') {
+                    const nearMe = `
+                        <div class="flex flex-row justify-between mobileSM:h-[40vh] items-center mobileSM:w-[95vw] laptop:w-auto gap-2 bg-[#fefefe] p-2">
+                            <div class="flex flex-col w-1/2">
+                                <h2 class="font-bold text-lg leading-none">${name}</h2>
+                                <span class="text-sm">${address}</span>
+                                <span class="text-sm">${phone}</span>
+                                <span class="text-sm">${openingHours}</span>
+                            </div>
+                            <button onclick="getDirections(${userLat}, ${userLon}, ${lat}, ${lon})" class="mobileSM:py-1 laptop:py-2 mobileSM:px-3 laptop:px-6 bg-[#21c251] text-white shadow-sm shadow-slate-400 font-semibold rounded-md hover:opacity-85">
+                                Get Directions
+                            </button>
+                        </div>
+                    `;
+
+                    nearbyBlock.innerHTML += nearMe;
+
+                    successAlert('Results found. Please zoom in/out your map.');
+                }
+
+
+            });
+        })
+        .catch(error => errAlert("Error fetching data:", error));
+        mobileArr.remove();
+    }
         mobileArrBool = true;
-        
 }
 
 function closeSidebarMobile(){
